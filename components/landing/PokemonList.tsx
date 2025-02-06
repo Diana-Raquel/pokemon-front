@@ -1,4 +1,6 @@
 // components/PokemonList.tsx
+import { usePokemonByAbility } from '@/hooks/use-PokemonAbility';
+import { usePokemonByType } from '@/hooks/use-PokemonType';
 import { useState } from 'react';
 import { usePokemon } from '../../hooks/use-pokemon';
 import { Pokemon } from '../../types/pokemon.type';
@@ -7,12 +9,50 @@ import { SearchBar } from './SearchBar';
 export const PokemonList = () => {
   const { data, isLoading, isError } = usePokemon();
   const [filteredPokemon, setFilteredPokemon] = useState<Pokemon[]>([]);
+  const [searchType, setSearchType] = useState<'nombre' | 'tipo' | 'Habilidad'>(
+    'nombre',
+  );
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSearch = (searchTerm: string) => {
+  // Usar los hooks en el nivel superior
+  const { data: typeData } = usePokemonByType(
+    searchType === 'tipo' ? searchTerm : '',
+  );
+  const { data: abilityData } = usePokemonByAbility(
+    searchType === 'Habilidad' ? searchTerm : '',
+  );
+
+  const handleSearch = (
+    searchTerm: string,
+    searchType: 'nombre' | 'tipo' | 'Habilidad',
+  ) => {
+    setSearchTerm(searchTerm);
+    setSearchType(searchType);
+
     if (!data) return;
-    const filtered = data.results.filter((pokemon) =>
-      pokemon.name.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
+
+    let filtered: Pokemon[] = [];
+
+    switch (searchType) {
+      case 'nombre':
+        filtered = data.results.filter((pokemon) =>
+          pokemon.name.toLowerCase().includes(searchTerm.toLowerCase()),
+        );
+        break;
+      case 'tipo':
+        if (typeData) {
+          filtered = typeData;
+        }
+        break;
+      case 'Habilidad':
+        if (abilityData) {
+          filtered = abilityData;
+        }
+        break;
+      default:
+        filtered = data.results;
+    }
+
     setFilteredPokemon(filtered);
   };
 
@@ -26,7 +66,7 @@ export const PokemonList = () => {
       <ul>
         {(filteredPokemon.length > 0
           ? filteredPokemon
-          : data?.results || []
+          : (data?.results ?? [])
         ).map((pokemon) => (
           <li key={pokemon.name}>{pokemon.name}</li>
         ))}

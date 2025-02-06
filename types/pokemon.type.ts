@@ -1,4 +1,4 @@
-// Objective: Define the types of the Pokemon API response.
+// Definir los tipos de datos que se van a utilizar para los Pokémon
 export interface Pokemon {
   name: string;
   url: string;
