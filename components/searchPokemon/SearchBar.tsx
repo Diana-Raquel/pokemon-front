@@ -1,4 +1,6 @@
-// components/landing/SearchBar.tsx
+'use client';
+
+import { Search } from 'lucide-react'; // Importar el ícono de Lucide
 import { useState } from 'react';
 
 interface SearchBarProps {
@@ -20,31 +22,41 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row gap-2 mb-6">
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search Pokémon..."
-        className="flex-grow px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <select
-        value={searchType}
-        onChange={(e) =>
-          setSearchType(e.target.value as 'nombre' | 'tipo' | 'habilidad')
-        }
-        className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-      >
-        <option value="nombre">Nombre</option>
-        <option value="tipo">Tipo</option>
-        <option value="habilidad">Habilidad</option>
-      </select>
+    <form
+      onSubmit={handleSearch}
+      className="flex items-center gap-2 rounded-lg p-2 shadow-sm pb-8"
+    >
+      {/* Input de búsqueda */}
+      <div className="flex items-center bg-white rounded-xl px-3 py-2 w-full">
+        <Search className="text-gray-500 mr-2" size={20} />
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search Pokémon..."
+          className="flex-grow bg-transparent text-gray-800 focus:outline-none"
+        />
+
+        {/* Selector de tipo */}
+        <select
+          value={searchType}
+          onChange={(e) =>
+            setSearchType(e.target.value as 'nombre' | 'tipo' | 'habilidad')
+          }
+          className="bg-white text-gray-800 px-4 py-2 border-l border-gray-300 focus:outline-none rounded-none"
+        >
+          <option value="nombre">Nombre</option>
+          <option value="tipo">Tipo</option>
+          <option value="habilidad">Habilidad</option>
+        </select>
+      </div>
+
       <button
-        onClick={handleSearch}
-        className="px-6 py-2 bg-gradient-to-r from-blue-900 to-purple-900 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        type="submit"
+        className="bg-[#505f86] text-white px-4 py-4 rounded-[60px] hover:bg-[#094067] focus:outline-none transition-colors duration-200 flex justify-center items-center"
       >
-        Search
+        <Search className="text-white" size={20} />
       </button>
-    </div>
+    </form>
   );
 };
