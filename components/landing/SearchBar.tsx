@@ -4,13 +4,13 @@ import { useState } from 'react';
 interface SearchBarProps {
   onSearch: (
     searchTerm: string,
-    searchType: 'nombre' | 'tipo' | 'Habilidad',
+    searchType: 'nombre' | 'tipo' | 'habilidad',
   ) => void;
 }
 
 export const SearchBar = ({ onSearch }: SearchBarProps) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchType, setSearchType] = useState<'nombre' | 'tipo' | 'Habilidad'>(
+  const [searchType, setSearchType] = useState<'nombre' | 'tipo' | 'habilidad'>(
     'nombre',
   );
 
@@ -24,12 +24,12 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
       <select
         value={searchType}
         onChange={(e) =>
-          setSearchType(e.target.value as 'nombre' | 'tipo' | 'Habilidad')
+          setSearchType(e.target.value as 'nombre' | 'tipo' | 'habilidad')
         }
       >
-        <option value="name">Nombre</option>
+        <option value="nombre">Nombre</option>
         <option value="tipo">Tipo</option>
-        <option value="Habilidad">Habilidad</option>
+        <option value="habilidad">Habilidad</option>
       </select>
       <input
         type="text"
