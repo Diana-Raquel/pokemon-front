@@ -20,7 +20,7 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row gap-4 mb-6">
+    <div className="flex flex-col sm:flex-row gap-2 mb-6">
       <input
         type="text"
         value={searchTerm}
@@ -35,13 +35,13 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
         }
         className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
-        <option value="nombre">Name</option>
-        <option value="tipo">Type</option>
-        <option value="habilidad">Ability</option>
+        <option value="nombre">Nombre</option>
+        <option value="tipo">Tipo</option>
+        <option value="habilidad">Habilidad</option>
       </select>
       <button
         onClick={handleSearch}
-        className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        className="px-6 py-2 bg-gradient-to-r from-blue-900 to-purple-900 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
       >
         Search
       </button>

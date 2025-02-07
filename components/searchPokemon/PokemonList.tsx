@@ -17,11 +17,9 @@ export const PokemonList = () => {
   if (isError) return <div>Error al cargar Pokémon</div>;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-8 py-8">
       <header className="flex items-center justify-between mb-8">
-        <div className="flex items-center">
-          <h1 className="text-3xl font-bold ml-4">Pokédex</h1>
-        </div>
+        <h1 className="text-3xl font-bold">Pokédex</h1>
       </header>
 
       <SearchBar
@@ -38,7 +36,7 @@ export const PokemonList = () => {
         onFilter={setFilteredPokemon}
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
+      <div>
         <PokemonListDisplay
           pokemonList={
             filteredPokemon.length > 0 ? filteredPokemon : pokemonList || []

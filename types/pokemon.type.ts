@@ -1,8 +1,10 @@
 export interface Pokemon {
+  weight: number;
+  height: number;
   id: number | string | null | undefined;
   image: string;
   types: string[];
-  abilities: string[]; // Agregar la propiedad abilities
+  abilities: string[];
   name: string;
   url: string;
 }
