@@ -1,5 +1,5 @@
 import { Pokemon } from '@/types/pokemon.type';
-import { PokemonItem } from './PokemonItem';
+import { PokemonCard } from './PokemonCard';
 
 interface PokemonListDisplayProps {
   pokemonList: Pokemon[];
@@ -9,10 +9,15 @@ export const PokemonListDisplay = ({
   pokemonList,
 }: PokemonListDisplayProps) => {
   return (
-    <ul>
+    <>
       {pokemonList.map((pokemon) => (
-        <PokemonItem key={pokemon.name} pokemon={pokemon} />
+        <PokemonCard
+          key={pokemon.id}
+          name={pokemon.name}
+          image={pokemon.image}
+          types={pokemon.types}
+        />
       ))}
-    </ul>
+    </>
   );
 };

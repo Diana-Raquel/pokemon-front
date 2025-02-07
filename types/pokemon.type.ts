@@ -1,5 +1,8 @@
-// Definir los tipos de datos que se van a utilizar para los Pokémon
 export interface Pokemon {
+  id: number | string | null | undefined;
+  image: string;
+  types: string[];
+  abilities: string[]; // Agregar la propiedad abilities
   name: string;
   url: string;
 }
