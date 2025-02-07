@@ -17,10 +17,16 @@ const fetchPokemon = async (): Promise<Pokemon[]> => {
       return {
         id: details.id,
         name: details.name,
-        image: details.sprites.front_default, // Imagen del Pokémon
-        types: details.types.map((t: any) => t.type.name), // Extraer tipos
-        abilities: details.abilities.map((a: any) => a.ability.name), // Extraer habilidades
-        url: pokemon.url,
+        image: details.sprites.front_default, // Imagen
+        types: details.types.map((t: any) => t.type.name), // Tipos
+        abilities: details.abilities.map((a: any) => a.ability.name), // Habilidades
+        height: details.height, // Altura
+        weight: details.weight, // Peso
+        stats: details.stats.map((s: any) => ({
+          name: s.stat.name,
+          base_stat: s.base_stat,
+        })), // Estadísticas base
+        base_experience: details.base_experience, // Experiencia base
       };
     }),
   );

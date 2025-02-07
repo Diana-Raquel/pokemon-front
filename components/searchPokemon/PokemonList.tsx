@@ -1,6 +1,7 @@
 import { usePokemon } from '@/hooks/use-pokemon';
 import { Pokemon } from '@/types/pokemon.type';
 import { useState } from 'react';
+import { PokemonDetailModal } from '../detailPokemon/PokemonDetailModal';
 import { PokemonFilter } from './PokemonFilter';
 import { PokemonListDisplay } from './PokemonListDisplay';
 import { SearchBar } from './SearchBar';
@@ -12,6 +13,7 @@ export const PokemonList = () => {
     'nombre',
   );
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null); // Estado para el Pokémon seleccionado
 
   if (isLoading) return <div>Cargando Pokémon...</div>;
   if (isError) return <div>Error al cargar Pokémon</div>;
@@ -36,13 +38,20 @@ export const PokemonList = () => {
         onFilter={setFilteredPokemon}
       />
 
-      <div>
-        <PokemonListDisplay
-          pokemonList={
-            filteredPokemon.length > 0 ? filteredPokemon : pokemonList || []
-          }
+      <PokemonListDisplay
+        pokemonList={
+          filteredPokemon.length > 0 ? filteredPokemon : pokemonList || []
+        }
+        onPokemonSelect={(pokemon) => setSelectedPokemon(pokemon)} // Pasar función para seleccionar Pokémon
+      />
+
+      {/* Modal */}
+      {selectedPokemon && (
+        <PokemonDetailModal
+          pokemon={selectedPokemon}
+          onClose={() => setSelectedPokemon(null)} // Función para cerrar el modal
         />
-      </div>
+      )}
     </div>
   );
 };
