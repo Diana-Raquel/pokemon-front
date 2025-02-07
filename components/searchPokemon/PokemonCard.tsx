@@ -21,7 +21,7 @@ export const PokemonCard = ({
     <div
       className={`bg-gradient-to-br ${pokemonColors[primaryType]} text-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 w-full border-2 ${pokemonColors[primaryType]}`}
     >
-      <div className="bg-gray-300 flex justify-center items-center p-6">
+      <div className="flex justify-center items-center p-6">
         <img src={image} alt={name} className="w-48 h-48" />
       </div>
 

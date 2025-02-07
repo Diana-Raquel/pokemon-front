@@ -1,7 +1,6 @@
 'use client';
 
 import { Pokemon } from '@/types/pokemon.type';
-import { pokemonColors } from '@/types/pokemonColors';
 
 interface PokemonDetailModalProps {
   pokemon: Pokemon;
@@ -12,12 +11,11 @@ export const PokemonDetailModal = ({
   pokemon,
   onClose,
 }: PokemonDetailModalProps) => {
-  // Obtener el color según el tipo del Pokémon
-  const primaryType = pokemon.types[0]?.toLowerCase() || 'normal';
-  const bgGradient = `${pokemonColors[primaryType]} via-gray-600 to-gray-700`;
+  const bgGradient =
+    'bg-gradient-to-br from-purple-700 via-indigo-800 to-indigo-900';
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 flex items-center justify-center z-50">
       <div
         className={`bg-gradient-to-br ${bgGradient} rounded-xl shadow-lg p-6 max-w-lg w-full relative`}
       >
