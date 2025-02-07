@@ -1,9 +1,7 @@
-import type React from 'react';
-
-export default function RootLayout({
+export default function StaticLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <body>{children}</body>;
+  return <div className="bg-gray-50 min-h-screen">{children}</div>;
 }
