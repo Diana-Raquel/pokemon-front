@@ -1,7 +1,8 @@
-// Definir la estructura de los datos de un Pokémon
+// types/pokemon.type.ts
 export interface Pokemon {
   id: number;
   name: string;
+  url: string;
   image: string; // URL de la imagen
   types: string[]; // Ejemplo: ['grass', 'poison']
   abilities: string[]; // Ejemplo: ['overgrow', 'chlorophyll']
