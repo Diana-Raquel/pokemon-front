@@ -1,9 +1,9 @@
-// hooks/usePokemonByAbility.ts
+import { BASE_API } from '@/constants';
 import { useQuery } from '@tanstack/react-query';
 import { Pokemon } from '../types/pokemon.type';
 
 const fetchPokemonByAbility = async (ability: string): Promise<Pokemon[]> => {
-  const response = await fetch(`https://pokeapi.co/api/v2/ability/${ability}`);
+  const response = await fetch(`${BASE_API}/ability/${ability}`);
   if (!response.ok) {
     throw new Error('Error al cargar Pokémon por habilidad');
   }

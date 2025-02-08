@@ -1,9 +1,9 @@
-// hooks/usePokemonByType.ts
+import { BASE_API } from '@/constants';
 import { useQuery } from '@tanstack/react-query';
 import { Pokemon } from '../types/pokemon.type';
 
 const fetchPokemonByType = async (type: string): Promise<Pokemon[]> => {
-  const response = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
+  const response = await fetch(`${BASE_API}/type/${type}`);
   if (!response.ok) {
     throw new Error('Error al cargar Pokémon por tipo');
   }

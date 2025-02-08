@@ -1,10 +1,11 @@
 // hooks/use-pokemon.ts
+import { BASE_API } from '@/constants';
 import { useQuery } from '@tanstack/react-query';
 import { Pokemon } from '../types/pokemon.type';
 
 const fetchPokemon = async (): Promise<Pokemon[]> => {
   // Paso 1: Obtener la lista básica de Pokémon
-  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100');
+  const response = await fetch(`${BASE_API}/pokemon?limit=100`);
   if (!response.ok) {
     throw new Error('Error al cargar Pokémon');
   }
