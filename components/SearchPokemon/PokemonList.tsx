@@ -1,13 +1,16 @@
+'use client';
+
 import { usePokemon } from '@/hooks/use-pokemon';
 import { Pokemon } from '@/types/pokemon.type';
 import { useState } from 'react';
-import { PokemonDetailModal } from '../detailPokemon/PokemonDetailModal';
+import { PokemonDetailModal } from '../DetailPokemon/PokemonDetailModal';
+import LoadingView from '../Loader/LoadingView';
 import { PokemonFilter } from './PokemonFilter';
 import { PokemonListDisplay } from './PokemonListDisplay';
 import { SearchBar } from './SearchBar';
 
 export const PokemonList = () => {
-  const { data: pokemonList, isLoading, isError } = usePokemon();
+  const { data: pokemonList, isLoading } = usePokemon();
   const [filteredPokemon, setFilteredPokemon] = useState<Pokemon[]>([]);
   const [searchType, setSearchType] = useState<'nombre' | 'tipo' | 'habilidad'>(
     'nombre',
@@ -15,8 +18,7 @@ export const PokemonList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null); // Estado para el Pokémon seleccionado
 
-  if (isLoading) return <div>Cargando Pokémon...</div>;
-  if (isError) return <div>Error al cargar Pokémon</div>;
+  if (isLoading) return <LoadingView />;
 
   return (
     <div className="container mx-auto px-8 py-8">
