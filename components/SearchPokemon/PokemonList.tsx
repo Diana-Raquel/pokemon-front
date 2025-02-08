@@ -16,7 +16,7 @@ export const PokemonList = () => {
     'nombre',
   );
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null); // Estado para el Pokémon seleccionado
+  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
 
   if (isLoading) return <LoadingView />;
 
@@ -40,14 +40,15 @@ export const PokemonList = () => {
         pokemonList={
           filteredPokemon.length > 0 ? filteredPokemon : pokemonList || []
         }
-        onPokemonSelect={(pokemon) => setSelectedPokemon(pokemon)} // Pasar función para seleccionar Pokémon
+        onPokemonSelect={(pokemon) => setSelectedPokemon(pokemon)} // Handle selection
       />
 
-      {/* Modal */}
+      {/* Pokémon Detail Modal (Properly Controlled) */}
       {selectedPokemon && (
         <PokemonDetailModal
           pokemon={selectedPokemon}
-          onClose={() => setSelectedPokemon(null)} // Función para cerrar el modal
+          open={Boolean(selectedPokemon)}
+          onClose={() => setSelectedPokemon(null)}
         />
       )}
     </div>

@@ -1,5 +1,11 @@
 'use client';
 
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Pokemon } from '@/types/pokemon.type';
 import { Plus } from 'lucide-react';
 import Image from 'next/image';
@@ -8,54 +14,46 @@ import { AddToTeamModal } from '../TeamModals/AddTeamModal';
 
 interface PokemonDetailModalProps {
   pokemon: Pokemon;
+  open: boolean;
   onClose: () => void;
 }
 
 export const PokemonDetailModal = ({
   pokemon,
+  open,
   onClose,
 }: PokemonDetailModalProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const bgGradient =
-    'bg-gradient-to-br from-purple-700 via-indigo-800 to-indigo-900';
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   return (
     <>
-      <div className="fixed inset-0 flex items-center justify-center z-50">
-        <div
-          className={`bg-gradient-to-br ${bgGradient} rounded-xl shadow-lg p-6 max-w-lg w-full relative`}
-        >
-          {/* Botón de cierre */}
-          <button
-            className="absolute top-4 right-4 text-gray-300 hover:text-white"
-            onClick={onClose}
-          >
-            ✖
-          </button>
+      <Dialog open={open} onOpenChange={onClose}>
+        <DialogContent className="max-w-sm space-y-1 sm:max-w-md md:max-w-lg lg:max-w-xl rounded-xl px-4 py-6">
+          <DialogHeader>
+            <DialogTitle className="text-center text-xl font-bold capitalize text-gray-900">
+              {pokemon.name}
+            </DialogTitle>
+          </DialogHeader>
 
-          {/* Imagen y nombre */}
-          <div className="flex justify-center mb-4">
+          {/* Pokémon Image */}
+          <div className="flex flex-col items-center">
             <Image
               src={pokemon.image}
               alt={pokemon.name}
-              width={160}
-              height={160}
-              className="w-40 h-40"
+              width={128}
+              height={128}
+              className="w-24 h-24 md:w-32 md:h-32 object-contain"
             />
           </div>
-          <h2 className="text-3xl font-bold capitalize text-center text-white mb-4">
-            {pokemon.name}
-          </h2>
 
-          {/* Tipos */}
-          <div className="text-center mb-4">
-            <p className="text-lg font-semibold text-gray-200">Tipos</p>
-            <div className="flex justify-center gap-2 mt-2">
+          {/* Types */}
+          <div className="mt-4 text-center">
+            <p className="text-lg font-semibold text-gray-600">Tipos</p>
+            <div className="flex justify-center gap-2 mt-2 flex-wrap">
               {pokemon.types.map((type) => (
                 <span
                   key={type}
-                  className="px-3 py-1 rounded-full text-sm font-semibold capitalize bg-white text-gray-900"
+                  className="px-3 py-1 rounded-full text-sm font-semibold capitalize bg-gray-200 text-gray-900"
                 >
                   {type}
                 </span>
@@ -63,14 +61,14 @@ export const PokemonDetailModal = ({
             </div>
           </div>
 
-          {/* Habilidades */}
-          <div className="text-center mb-4">
-            <p className="text-lg font-semibold text-gray-200">Habilidades</p>
-            <div className="flex justify-center gap-2 mt-2">
+          {/* Abilities */}
+          <div className="mt-4 text-center">
+            <p className="text-lg font-semibold text-gray-600">Habilidades</p>
+            <div className="flex justify-center gap-2 mt-2 flex-wrap">
               {pokemon.abilities.map((ability) => (
                 <span
                   key={ability}
-                  className="px-3 py-1 rounded-full text-sm font-semibold capitalize bg-white text-gray-900"
+                  className="px-3 py-1 rounded-full text-sm font-semibold capitalize bg-gray-200 text-gray-900"
                 >
                   {ability}
                 </span>
@@ -78,72 +76,73 @@ export const PokemonDetailModal = ({
             </div>
           </div>
 
-          {/* Altura y Peso */}
-          <div className="text-center mb-4">
-            <p className="text-lg font-semibold text-gray-200">
+          {/* Height & Weight */}
+          <div className="mt-4 text-center">
+            <p className="text-lg font-semibold text-gray-600">
               Información Física
             </p>
-            <div className="flex justify-around mt-2">
+            <div className="flex justify-around mt-2 text-sm">
               <div>
-                <p className="text-sm text-gray-300">Altura</p>
-                <p className="font-bold text-white">
+                <p className="text-gray-500">Altura</p>
+                <p className="font-bold text-gray-900">
                   {(pokemon.height / 10).toFixed(1)} m
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-300">Peso</p>
-                <p className="font-bold text-white">
+                <p className="text-gray-500">Peso</p>
+                <p className="font-bold text-gray-900">
                   {(pokemon.weight / 10).toFixed(1)} kg
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Estadísticas */}
-          <div className="text-center mb-4">
-            <p className="text-lg font-semibold text-gray-200">Estadísticas</p>
+          {/* Stats */}
+          <div className="mt-4 text-center">
+            <p className="text-lg font-semibold text-gray-600">Estadísticas</p>
             <div className="mt-2 space-y-2">
               {pokemon.stats.map((stat) => (
-                <div
-                  key={stat.name}
-                  className="flex justify-between items-center text-sm"
-                >
-                  <p className="capitalize text-gray-300">{stat.name}</p>
-                  <div className="w-2/3 bg-gray-200 rounded-full h-2.5 overflow-hidden">
+                <div key={stat.name} className="flex items-center text-sm">
+                  <p className="capitalize text-gray-600 w-20">{stat.name}</p>
+                  <div className="flex-1 bg-gray-300 rounded-full h-2.5 overflow-hidden">
                     <div
                       className="bg-blue-500 h-full rounded-full"
                       style={{ width: `${(stat.base_stat / 150) * 100}%` }}
                     />
                   </div>
-                  <p className="ml-2 font-bold text-white">{stat.base_stat}</p>
+                  <p className="ml-2 font-bold text-gray-900">
+                    {stat.base_stat}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Experiencia base */}
-          <div className="text-center mb-4">
-            <p className="text-lg font-semibold text-gray-200">
+          {/* Base Experience */}
+          <div className="mt-4 text-center">
+            <p className="text-lg font-semibold text-gray-600">
               Experiencia Base
             </p>
-            <p className="font-bold text-white">{pokemon.base_experience}</p>
+            <p className="font-bold text-gray-900">{pokemon.base_experience}</p>
           </div>
 
-          {/* Botón para abrir el modal de agregar a equipo */}
-          <button
-            className="bg-[#094067] px-4 py-4 rounded-full text-base font-bold hover:opacity-90 active:scale-95"
-            onClick={() => setIsOpen(true)}
-          >
-            <Plus />
-          </button>
-        </div>
-      </div>
+          {/* Add to Team Button */}
+          <div className="mt-6 flex justify-center">
+            <button
+              className="bg-[#094067] px-4 py-2 rounded-full text-white text-sm md:text-base font-bold hover:opacity-90 active:scale-95 flex items-center gap-2 transition-transform"
+              onClick={() => setIsAddModalOpen(true)}
+            >
+              <Plus className="w-5 h-5" /> Agregar al Equipo
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
-      {/* Modal de agregar a equipo */}
-      {isOpen && (
+      {/* Add to Team Modal */}
+      {isAddModalOpen && (
         <AddToTeamModal
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
+          isOpen={isAddModalOpen}
+          onClose={() => setIsAddModalOpen(false)}
           pokemon={pokemon}
         />
       )}
